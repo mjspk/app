@@ -1,0 +1,49 @@
+<div class="container justify-content-center">
+    <div class="row justify-content-center">
+        <div class="col-md-9 offset-md-3 vh-75">
+            <div class="row">
+                <div class="col-md-6 mt-4">
+                    <div class="card p-4">
+                        <h1 class="mt-4">{{ book.title }}</h1>
+                        <p>by {{ book.authors }}</p>
+                        <p>{{ book.download_count }} downloads</p>
+                        <p> Language: {{ book.language }}</p>
+                        <p> Subjects: <span *ngFor="let subject of book.subjects">{{ subject }}</span></p>
+                        <p> Copyright: {{ book.copyright }}</p>
+                        <div class="col">
+                            <div class="dropdown" style="display: inline-block;">
+                                <button class="btn bg-accent dropdown-toggle" type="button" id="dropdownMenuButton"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-download"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" (click)="downloadPdf(book)"><i
+                                                class="fa fa-file-pdf-o"></i>
+                                            PDF</a></li>
+                                    <li><a class="dropdown-item" (click)="downloadTxt(book)"><i
+                                                class="fa fa-file-text-o"></i>
+                                            TXT</a></li>
+                                    <li><a class="dropdown-item" (click)="downloadMP3(book)"><i
+                                                class="fa fa-file-audio-o"></i>
+                                            MP3</a></li>
+
+                                </ul>
+                            </div>
+                            <button class="btn bg-accent m-2"><i class="fa fa-book" (click)="read(book)"
+                                    style="width: 20px;"></i></button>
+                            <button class="btn bg-accent m-2"><i class="fa fa-play" (click)="play(book)"
+                                    style="width: 20px;"></i></button>
+                        </div>
+                        <div class="col">
+                            <button class="btn bg-accent m-2" (click)="onBack()"><i class="fa fa-arrow-left"
+                                    style="width: 20px;"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <img [src]="book.cover" alt="{{ book.title }} cover image" class="img-fluid img-thumbnail h-100" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

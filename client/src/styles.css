@@ -1,0 +1,223 @@
+/* You can add global styles to this file, and also import other style files */
+
+accent {
+    color: #bbe0ae;
+}
+
+gb {
+    color: #fbf6ec;
+}
+
+html,
+body {
+    overflow: hidden;
+    height: 100%;
+    background-color: #cbbc98;
+
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* add few nice background colors class */
+.bg-accent {
+    background-color: #bbe0ae;
+    color: #262626;
+}
+
+.bg-gb {
+    background-color: #fbf6ec;
+    color: #262626;
+}
+
+.active-accent {
+    background-color: #bbe0ae;
+    color: #121212;
+}
+
+.active-gb {
+    background-color: #fbf6ec;
+    color: #121212;
+}
+
+.tab {
+    color: #fbf6ec;
+    font-weight: 100;
+    font-size: 1.2em;
+    margin:4px;
+    text-decoration: none;
+}
+
+.tab:hover {
+    color: #fbf6ec;
+    font-weight: 400;
+    font-size: 1.2em;
+    margin:4px;
+    text-decoration: none;
+}
+
+.active-tab {
+    color: #fff;
+    font-weight: 500;
+    font-size: 1.2em;
+    margin:4px;
+    text-decoration: none;
+}
+
+
+
+
+.laoding-conatiner {
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 0.5em;
+    box-shadow: 0 0 0.5em 0.1em #000;
+    padding: 1em;
+}
+
+.laoding-conatiner .spinner-border {
+    width: 100%;
+    height: 100%;
+    border-width: 0.2em;
+    border-color: #000;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border 0.75s linear infinite;
+}
+
+
+.center-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.auto-hide-scroll-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    border-radius: 4px;
+    padding: 2px;
+    margin-bottom: 10px;
+
+}
+
+.search-container .search-area {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 2px;
+    background-color: #fff;
+    margin-right: 10px;
+}
+
+.search-area input[type="search"] {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    color: #000;
+    text-align: center;
+}
+
+
+.search-area .loading-img {
+    width: 40px;
+    height: 40px;
+}
+
+.search-area .loading-img-container {
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+}
+
+.search-area .search-button {
+    background-color: #bbe0ae;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 0px 4px 4px 0px;
+    padding: 10px;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+}
+
+
+
+
+.search-container .next-button {
+    background-color: #bbe0ae;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+}
+
+.search-container .next-button:hover {
+    background-color: #fbf6ec;
+    color: #000;
+}
+
+.search-container .next-button:disabled {
+    background-color: #ad996b;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.search-container .prev-button {
+    background-color: #bbe0ae;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    width: 44px;
+    height: 44px;
+    margin-right: 10px;
+
+}
+
+.search-container .prev-button:hover {
+    background-color: #fbf6ec;
+    color: #000;
+}
+
+.search-container .prev-button:disabled {
+    background-color: #ad996b;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    padding: 10px;
+}
+
