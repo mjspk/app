@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-2 overflow-auto auto-hide-scroll-bar" style="height: 90vh;">
+        <div class="col-2">
             <div class="list-group">
                 <button class="list-group-item bg-gb" *ngFor="let category of categories"
                     (click)="selectCategory(category)" [class.active-accent]="category === selectedCategory">
@@ -30,7 +30,7 @@
                     </button>
                 </div>
             </div>
-            <div class="row justify-content-center overflow-auto" style="height: 82vh;">
+            <div class="row justify-content-center">
                 <div class="center-center col-md-3" *ngIf="books.length === 0 && !isLoading">
                     <div class="alert alert-info text-center">
                         No books found.
@@ -71,6 +71,16 @@
 
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <button class="btn bg-accent" (click)="previousPage()" [disabled]="pageNumber === 1">
+                            <i class="fa fa-arrow-left"></i>
+                        </button>
+                        <button class="btn bg-accent" (click)="nextPage()" [disabled]="books.length < 10">
+                            <i class="fa fa-arrow-right"></i>
+                        </button>
                     </div>
                 </div>
             </div>

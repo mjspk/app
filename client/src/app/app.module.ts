@@ -13,13 +13,13 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EbooksComponent } from './components/ebooks/ebooks.component';
 import { PdfToAudioComponent } from './components/pdf-to-audio/pdf-to-audio.component';
 import { EbookDetailsComponent } from './components/ebook-details/ebook-details.component';
 import { AboutComponent } from './components/about/about.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -31,12 +31,12 @@ import { AboutComponent } from './components/about/about.component';
     PdfToAudioComponent,
     EbookDetailsComponent,
     AboutComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule,
     BrowserAnimationsModule,
     MatSlideToggleModule,
     MatTabsModule,
