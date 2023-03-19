@@ -8,7 +8,7 @@ import { Book } from '../models/book';
 export class GutendexService {
 
   totalPageCount = 0;
-  baseUrl = 'http://localhost:5000';
+  baseUrl = '/api';
   booksUrl = this.baseUrl + '/books';
   subjectsUrl = this.baseUrl + '/subjects';
   bysubjectsUrl = this.baseUrl + '/bysubject';
