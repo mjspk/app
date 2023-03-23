@@ -9,11 +9,13 @@ export class GutendexService {
 
   totalPageCount = 0;
   baseUrl = '/api';
+  // baseUrl = 'http://localhost:4000';
   booksUrl = this.baseUrl + '/books';
   subjectsUrl = this.baseUrl + '/subjects';
   bysubjectsUrl = this.baseUrl + '/bysubject';
   searchUrl = this.baseUrl + '/search';
   gettxtUrl = this.baseUrl + '/gettext';
+  textToSpeechUrl = this.baseUrl + '/text-to-speech';
 
   constructor(private http: HttpClient) { }
 
@@ -67,7 +69,7 @@ export class GutendexService {
       const totalBooks = data.totalCount;
       this.totalPageCount = Math.ceil(totalBooks / limit);
       return data.books;
-      
+
     }
     catch (error) {
       console.log(error);
@@ -84,7 +86,7 @@ export class GutendexService {
       const totalBooks = data.totalCount;
       this.totalPageCount = Math.ceil(totalBooks / limit);
       return data.books;
-      
+
     }
     catch (error) {
       console.log(error);
@@ -109,4 +111,52 @@ export class GutendexService {
       throw new Error(`Error retrieving text: ${error.message}`);
     }
   }
+
+  async postTextToSpeech(text: string, language: string, speed: number, gender: string): Promise<Blob> {
+
+    const body = {
+      text: text,
+      language: language,
+      speed: speed,
+      gender: gender
+    };
+
+    try {
+
+      const response: HttpResponse<Blob> | undefined = await this.http.post(this.textToSpeechUrl, body, { observe: 'response', responseType: 'blob' }).toPromise();
+      if (response && response.status === 200 && response.body !== null) {
+        return response.body;
+      }
+      else {
+        throw new Error(`Error retrieving text: status ${response?.status ?? 'undefined'}`);
+      }
+
+    }
+    catch (error: any) {
+      console.error(error);
+      throw new Error(`Error retrieving text: ${error.message}`);
+    }
+
+  }
+
+  async getTextToSpeech(id: number, language: string, speed: number, gender: string): Promise<Blob> {
+
+     try{
+       const response: HttpResponse<Blob> | undefined = await this.http.get(this.textToSpeechUrl + '/' + id + '?language=' + language + '&speed=' + speed + '&gender=' + gender, { observe: 'response', responseType: 'blob' }).toPromise();
+        if (response && response.status === 200 && response.body !== null) {
+          return response.body;
+        }
+        else {
+          throw new Error(`Error retrieving text: status ${response?.status ?? 'undefined'}`);
+        }
+
+     }
+      catch (error: any) {
+        console.error(error);
+        throw new Error(`Error retrieving text: ${error.message}`);
+      }
+    }
+
+
+
 }

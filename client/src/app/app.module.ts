@@ -20,6 +20,8 @@ import { PdfToAudioComponent } from './components/pdf-to-audio/pdf-to-audio.comp
 import { EbookDetailsComponent } from './components/ebook-details/ebook-details.component';
 import { AboutComponent } from './components/about/about.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { DndDirective } from './directives/dnd.directive';
+import { ProgressComponent } from './components/progress/progress.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { FooterComponent } from './components/footer/footer.component';
     EbookDetailsComponent,
     AboutComponent,
     FooterComponent,
+    DndDirective,
+    ProgressComponent,
   ],
   imports: [
     BrowserModule,

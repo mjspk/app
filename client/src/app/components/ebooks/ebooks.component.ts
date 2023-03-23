@@ -15,17 +15,8 @@ import { GutendexService } from 'src/app/services/gutendex.service';
 })
 export class EbooksComponent {
 
-  previous() {
-    throw new Error('Method not implemented.');
-  }
-  next() {
-    throw new Error('Method not implemented.');
-  }
-  isPlaying: any;
-  progress: any;
-  playPause() {
-    throw new Error('Method not implemented.');
-  }
+  
+ 
 
 
   isLoading = false;
@@ -36,7 +27,7 @@ export class EbooksComponent {
   searchTerm!: string;
   pageNumber!: number;
   totalPages!: number;
-  selectedBook!: Book;
+  selectedBook!: Book|undefined;
   pdfHelper!: PdfHelper;
   audioHelper!: AudioHelper;
   txtHelper!: TxtHelper;
@@ -105,7 +96,13 @@ export class EbooksComponent {
     this.router.navigate(['/ebookdetails'], { queryParams: { id: book.id } });
   }
   play(book: Book) {
-   this.audioHelper.textToSpeech(book.id);
+    this.selectedBook = book;
+    this.isPlaying = true;
+   this.audioHelper.textToSpeech(book.id, book.title);
+   this.audioHelper.progressCallback = (progress: any) => {
+      this.progress = progress;
+    }
+
   }
   read(book: Book) {
     this.pdfHelper.readPdf(book.id);
@@ -114,7 +111,7 @@ export class EbooksComponent {
     this.pdfHelper.downloadPdf(book.id, book.title);
   }
   downloadMP3(book: Book) {
-    this.audioHelper.downloadMp3(book.formats['text/plain'], book.title);
+    this.audioHelper.downloadMp3(book.id, book.title);
   }
   downloadTxt(_t34: Book) {
     this.txtHelper.downloadTxtFile(_t34.id, _t34.title);
@@ -151,7 +148,31 @@ export class EbooksComponent {
     }
   }
 
+  isPlaying: boolean = false;
+  progress: any;
+  playPause() {
+    if (this.audioHelper.isPaused()) {
+      this.audioHelper.resume();
+      this.isPlaying = true;
+    }
+    else {
+      this.audioHelper.pause();
+      this.isPlaying = false;
+    }
+  }
 
+  increaseSpeed() {
+    this.audioHelper.increaseSpeechRate();
+  }
+
+  decreaseSpeed() {
+    this.audioHelper.decreaseSpeechRate();
+  }
+
+  cancel() {
+    this.audioHelper.cancel();   
+    this.selectedBook = undefined; 
+  }
 
 
 

@@ -4,35 +4,78 @@
             <div class="card mb-3">
                 <h2 class="text-center mb-4">Convert Book</h2>
                 <div class="card-body">
-                    <div id="drag-drop-area" class="text-center p-5" ondrop="dropHandler(event)" ondragover="dragOverHandler(event)">
-                                            <p class="mb-3">Drag and drop a book file (.txt or .pdf) here or click to select a file.</p>
-                        <input type="file" id="book-file" class="d-none" accept=".txt,.pdf">
+                    <div>
+                        <div class="dnd-container" appDnd (fileDropped)="onFileDropped($event)"
+                            onclick="document.getElementById('fileDropRef').click()">
+                            <input type="file" #fileDropRef id="fileDropRef" 
+                                (change)="fileBrowseHandler($event)" style="display: none;">
+                            <i class="fa fa-cloud-upload fa-2x" width="20px" alt="file"></i>
+                            <h3>Drag and drop file here</h3>
+                            <h3>or</h3>
+                            <p>click to browse</p>
+                        </div>
+                        <div class="files-list">
+                            <div class="single-file" *ngFor="let file of files; let i = index">
+                                <div class="info">
+                                    <h4 class="name">
+                                        {{ file?.name }}
+                                    </h4>
+                                    <p class="size">
+                                        {{ formatBytes(file?.size) }}
+                                    </p>
+                                    <app-progress [progress]="file?.progress"></app-progress>
+                                </div>
+                                <button class="delete" width="20px" alt="file" (click)="deleteFile(i)">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group mt-4">
-                        <label for="reading-speed">Reading speed:</label>
-                        <select id="reading-speed" class="form-control">
-                            <option value="100">100 words per minute</option>
-                            <option value="200">200 words per minute</option>
-                            <option value="300">300 words per minute</option>
+                        <label for="reading-speed">Select Language</label>
+                        <select id="reading-speed" class="form-control" [(ngModel)]="selectedLanguage">
+                            <option *ngFor="let language of languages" [value]="language">
+                                {{ language.name }}
+                            </option>
                         </select>
                     </div>
-                    <div class="form-group mt-2">
-                        <label for="voice">Select a voice:</label>
-                        <select id="voice" class="form-control">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                    <div class="form-group mt-4">
+                        <label for="reading-speed">Select voice</label>
+                        <select id="reading-speed" class="form-control" [(ngModel)]="selectedVoice">
+                            <option *ngFor="let voice of voices" [value]="voice">
+                                {{ voice }}
+                            </option>
                         </select>
                     </div>
-                    <div class="text-center mt-4">
-                        <button id="convert-btn" class="btn btn-primary btn-block">Convert</button>
+                        <div class="text-center mt-4" *ngIf="isControlEnabled">
+                            <div class="btn-group" role="group">
+                                <button id="play-pause-btn" class="btn bg-accent" (click)="playPause()">
+                                    <i [ngClass]="{'fa-play': !isPlaying, 'fa-pause': isPlaying}" class="fa"></i>
+                                </button>
+                                <button id="increase-speed-btn" class="btn bg-accent" (click)="increaseSpeed()">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                                <button id="decrease-speed-btn" class="btn bg-accent" (click)="decreaseSpeed()">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <button id="download-btn" class="btn bg-accent" (click)="download()">
+                                    <i class="fa fa-download"></i>
+                                </button>
+                                <button id="cancel-btn" class="btn btn-secondary" (click)="cancel()">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-center mt-4">
+                            <div id="spinner" [ngClass]="{'d-none': !isConverting}">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Converting...</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
-    <div id="spinner" class="d-none">
-        <div class="spinner-border text-primary" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-</div>

@@ -85,5 +85,24 @@
                 </div>
             </div>
         </div>
+        <div class="col-2">
+            <div class="player-container" *ngIf="selectedBook">
+                <img src="{{ selectedBook.cover }}" alt="{{ selectedBook.title }} cover image"
+                    >
+                <h2>  {{ selectedBook.title }} </h2>
+                <div class="progress-bar">
+                    <div class="progress" [style.width]="progress + '%'"></div>
+                </div>
+                <div class="controls">
+                    <button (click)="playPause()"><i [class]="isPlaying ? 'fa fa-pause' : 'fa fa-play'"></i></button>
+                    <button id="increase-speed-button" (click)="increaseSpeed()"
+                    ><i class="fa fa-plus"></i></button>
+                    <button id="decrease-speed-button" (click)="decreaseSpeed()"
+                    ><i class="fa fa-minus"></i></button>
+                    <button id="cancel-button" (click)="cancel()"
+                    ><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
     </div>
 </div>

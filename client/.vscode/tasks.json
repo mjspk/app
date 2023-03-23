@@ -5,7 +5,7 @@
     {
       "label": "Start Angular App",
       "type": "shell",
-      "command": "npm start",
+      "command": "cd client && npm start",
       "group": {
         "kind": "build",
         "isDefault": true

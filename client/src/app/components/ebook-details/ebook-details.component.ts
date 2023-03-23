@@ -42,16 +42,16 @@ export class EbookDetailsComponent {
     this.router.navigate(['/ebookdetails'], { queryParams: { id: book.id } });
   }
   play(book: Book) {
-    this.audioHelper.textToSpeech(book.formats['text/plain'])
+    this.audioHelper.textToSpeech(book.id, book.title);
   }
   read(book: Book) {
-    this.pdfHelper.readPdf(book.formats['text/plain']);
+    this.pdfHelper.readPdf(book.id);
   }
   downloadPdf(book: Book) {
-    this.pdfHelper.downloadPdf(book.formats['text/plain'], book.title);
+    this.pdfHelper.downloadPdf(book.id, book.title);
   }
   downloadMP3(book: Book) {
-    this.audioHelper.downloadMp3(book.formats['text/plain'], book.title);
+    this.audioHelper.downloadMp3(book.id, book.title);
   }
   downloadTxt(_t34: Book) {
     this.txtHelper.downloadTxtFile(_t34.id, _t34.title);
