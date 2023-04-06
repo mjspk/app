@@ -5,7 +5,7 @@ import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { HttpClientModule } from '@angular/common/http';
 
-
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +22,8 @@ import { AboutComponent } from './components/about/about.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { DndDirective } from './directives/dnd.directive';
 import { ProgressComponent } from './components/progress/progress.component';
+import { TextAudioPlayerComponent } from './components/text-audio-player/text-audio-player.component';
+import { TextAudioDownloaderComponent } from './components/text-audio-downloader/text-audio-downloader.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { ProgressComponent } from './components/progress/progress.component';
     FooterComponent,
     DndDirective,
     ProgressComponent,
+    TextAudioPlayerComponent,
+    TextAudioDownloaderComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +50,7 @@ import { ProgressComponent } from './components/progress/progress.component';
     MatTabsModule,
     MatTableModule,
     MatPaginatorModule,
+    MatDialogModule,
     HttpClientModule
 
   ],

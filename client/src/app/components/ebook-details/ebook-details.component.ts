@@ -5,6 +5,8 @@ import { GutendexService } from 'src/app/services/gutendex.service';
 import { AudioHelper } from 'src/app/helpers/audioHelper';
 import { PdfHelper } from 'src/app/helpers/pdfHelper';
 import { TxtHelper } from 'src/app/helpers/txtHelper';
+import { MatDialog } from '@angular/material/dialog';
+import { TextAudioPlayerComponent } from '../text-audio-player/text-audio-player.component';
 @Component({
   selector: 'app-ebook-details',
   templateUrl: './ebook-details.component.html',
@@ -17,7 +19,7 @@ export class EbookDetailsComponent {
   pdfHelper!: PdfHelper;
   audioHelper!: AudioHelper;
   txtHelper!: TxtHelper;
-  constructor(private router: Router, private route: ActivatedRoute, booksService: GutendexService, pdfHelper: PdfHelper, audioHelper: AudioHelper, txtHelper: TxtHelper) {
+  constructor(private router: Router, private route: ActivatedRoute, booksService: GutendexService, pdfHelper: PdfHelper, audioHelper: AudioHelper, txtHelper: TxtHelper,public dialog: MatDialog) {
     this.pdfHelper = pdfHelper;
     this.audioHelper = audioHelper;
     this.gutendexService = booksService;
@@ -41,8 +43,13 @@ export class EbookDetailsComponent {
   info(book: Book) {
     this.router.navigate(['/ebookdetails'], { queryParams: { id: book.id } });
   }
-  play(book: Book) {
-    this.audioHelper.textToSpeech(book.id, book.title);
+  async play(book: Book) {
+    let dialogRef = this.dialog.open(TextAudioPlayerComponent, {
+      maxHeight: '50%',
+      data: { book: book, text: '' }
+    });
+
+
   }
   read(book: Book) {
     this.pdfHelper.readPdf(book.id);
@@ -51,7 +58,7 @@ export class EbookDetailsComponent {
     this.pdfHelper.downloadPdf(book.id, book.title);
   }
   downloadMP3(book: Book) {
-    this.audioHelper.downloadMp3(book.id, book.title);
+    this.audioHelper.textToAudio(book.id, book.title);
   }
   downloadTxt(_t34: Book) {
     this.txtHelper.downloadTxtFile(_t34.id, _t34.title);

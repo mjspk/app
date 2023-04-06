@@ -1,0 +1,36 @@
+<div class="player-container">
+    <h2> {{ selectedBook.title }} </h2>
+    <div class="loading-container ">
+        <img *ngIf="isLoading" src="https://acegif.com/wp-content/uploads/loading-37.gif" alt="Loading...">
+    </div>
+    <div class="controls">
+        <button (click)="download()"><i class="fa fa-download"></i></button>
+        <div class="dropdown" style="display: inline-block;">
+            <button class="btn bg-accent dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-microphone"></i>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <li><a class="dropdown-item" *ngFor="let voice of voices"
+                            [ngClass]="{ 'active': voice.name === selectedVoice?.name }" (click)="changeVoice(voice)">{{
+                            voice.name
+                            }}</a></li>
+                </ul>
+
+            </button>
+        </div>
+        <div class="dropdown" style="display: inline-block;">
+            <button class="btn bg-accent dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa fa-tachometer"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li><a class="dropdown-item" *ngFor="let rate of rates" [ngClass]="{ 'active': rate === selectedRate }"
+                        (click)="changeRate(rate)">{{ rate
+                        }}</a></li>
+            </ul>
+        </div>
+
+
+        <button id="cancel-button" (click)="cancel()"><i class="fa fa-times"></i></button>
+    </div>
+</div>

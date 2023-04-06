@@ -1,7 +1,7 @@
 version: '3'
 services:
   nginx:
-    image: mjspk/nginx:latest
+    image: mjspk/bbcast_nginx:latest
     depends_on:
       - api
       - client
@@ -10,23 +10,23 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     ports:
-      - "3050:80"
+      - "8660:8660"
 
   api:
-    image: mjspk/api:latest
+    image: mjspk/bbcast_api:latest
     build:
       context: ./api
       dockerfile: Dockerfile
-    
+   
 
   client:
     stdin_open: true
     environment:
       - CHOKIDAR_USEPOLLING=true
-    image: mjspk/client:latest
+    image: mjspk/bbcast_client:latest
     build:
       context: ./client
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     
 
 

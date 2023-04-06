@@ -7,6 +7,9 @@ import { TxtHelper } from 'src/app/helpers/txtHelper';
 import { Book } from 'src/app/models/book';
 import { Categories, Category } from 'src/app/models/category';
 import { GutendexService } from 'src/app/services/gutendex.service';
+import { MatDialog } from '@angular/material/dialog';
+import { TextAudioPlayerComponent } from '../text-audio-player/text-audio-player.component';
+import { TextAudioDownloaderComponent } from '../text-audio-downloader/text-audio-downloader.component';
 
 @Component({
   selector: 'app-ebooks',
@@ -15,8 +18,8 @@ import { GutendexService } from 'src/app/services/gutendex.service';
 })
 export class EbooksComponent {
 
-  
- 
+
+
 
 
   isLoading = false;
@@ -27,13 +30,14 @@ export class EbooksComponent {
   searchTerm!: string;
   pageNumber!: number;
   totalPages!: number;
-  selectedBook!: Book|undefined;
+  selectedBook!: Book | undefined;
   pdfHelper!: PdfHelper;
   audioHelper!: AudioHelper;
   txtHelper!: TxtHelper;
 
-  constructor(private router: Router, booksService: GutendexService, pdfHelper: PdfHelper, 
-    audioHelper: AudioHelper, txtHelper: TxtHelper) {
+
+  constructor(private router: Router, booksService: GutendexService, pdfHelper: PdfHelper,
+    audioHelper: AudioHelper, txtHelper: TxtHelper, public dialog: MatDialog) {
     this.pdfHelper = pdfHelper;
     this.audioHelper = audioHelper;
     this.txtHelper = txtHelper;
@@ -95,13 +99,12 @@ export class EbooksComponent {
   info(book: Book) {
     this.router.navigate(['/ebookdetails'], { queryParams: { id: book.id } });
   }
-  play(book: Book) {
-    this.selectedBook = book;
-    this.isPlaying = true;
-   this.audioHelper.textToSpeech(book.id, book.title);
-   this.audioHelper.progressCallback = (progress: any) => {
-      this.progress = progress;
-    }
+
+  async play(book: Book) {
+    this.dialog.open(TextAudioPlayerComponent, {
+      data: { book: book, text: '' }
+    });
+
 
   }
   read(book: Book) {
@@ -111,7 +114,9 @@ export class EbooksComponent {
     this.pdfHelper.downloadPdf(book.id, book.title);
   }
   downloadMP3(book: Book) {
-    this.audioHelper.downloadMp3(book.id, book.title);
+    this.dialog.open(TextAudioDownloaderComponent, {
+      data: { book: book, text: '' }
+    });
   }
   downloadTxt(_t34: Book) {
     this.txtHelper.downloadTxtFile(_t34.id, _t34.title);
@@ -146,32 +151,6 @@ export class EbooksComponent {
     else {
       this.getBooksByCategory();
     }
-  }
-
-  isPlaying: boolean = false;
-  progress: any;
-  playPause() {
-    if (this.audioHelper.isPaused()) {
-      this.audioHelper.resume();
-      this.isPlaying = true;
-    }
-    else {
-      this.audioHelper.pause();
-      this.isPlaying = false;
-    }
-  }
-
-  increaseSpeed() {
-    this.audioHelper.increaseSpeechRate();
-  }
-
-  decreaseSpeed() {
-    this.audioHelper.decreaseSpeechRate();
-  }
-
-  cancel() {
-    this.audioHelper.cancel();   
-    this.selectedBook = undefined; 
   }
 
 

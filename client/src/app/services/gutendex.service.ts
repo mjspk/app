@@ -1,5 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Book } from '../models/book';
 
 @Injectable({
@@ -8,15 +9,15 @@ import { Book } from '../models/book';
 export class GutendexService {
 
   totalPageCount = 0;
-  baseUrl = '/api';
-  // baseUrl = 'http://localhost:4000';
+  baseUrl = environment.apiBaseUrl;
   booksUrl = this.baseUrl + '/books';
   subjectsUrl = this.baseUrl + '/subjects';
   bysubjectsUrl = this.baseUrl + '/bysubject';
   searchUrl = this.baseUrl + '/search';
   gettxtUrl = this.baseUrl + '/gettext';
-  textToSpeechUrl = this.baseUrl + '/text-to-speech';
-
+  textToAudioUrl = this.baseUrl + '/text-to-audio';
+  textFileToAudioUrl = this.baseUrl + '/txt-file-to-audio';
+  pdfFileToAudioUrl = this.baseUrl + '/pdf-file-to-audio';
   constructor(private http: HttpClient) { }
 
   async getAllBooks(pageNumber: number): Promise<Book[]> {
@@ -112,18 +113,11 @@ export class GutendexService {
     }
   }
 
-  async postTextToSpeech(text: string, language: string, speed: number, gender: string): Promise<Blob> {
 
-    const body = {
-      text: text,
-      language: language,
-      speed: speed,
-      gender: gender
-    };
+  async getBookAudio(id: number, voice: string, speed: number, gender: string): Promise<Blob> {
 
     try {
-
-      const response: HttpResponse<Blob> | undefined = await this.http.post(this.textToSpeechUrl, body, { observe: 'response', responseType: 'blob' }).toPromise();
+      const response: HttpResponse<Blob> | undefined = await this.http.get(this.textToAudioUrl + '/' + id + '?voice=' + voice + '&speed=' + speed + '&gender=' + gender, { observe: 'response', responseType: 'blob' }).toPromise();
       if (response && response.status === 200 && response.body !== null) {
         return response.body;
       }
@@ -136,26 +130,35 @@ export class GutendexService {
       console.error(error);
       throw new Error(`Error retrieving text: ${error.message}`);
     }
+  }
+
+  async postTxtFileToAudio(file: any, voice: string, speed: number, gender: string): Promise<Blob> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    const response: HttpResponse<Blob> | undefined = await this.http.post(this.textFileToAudioUrl + '?voice=' + voice + '&speed=' + speed + '&gender=' + gender, formData, { observe: 'response', responseType: 'blob' }).toPromise();
+    if (response && response.status === 200 && response.body !== null) {
+      return response.body;
+    }
+    else {
+      throw new Error(`Error retrieving text: status ${response?.status ?? 'undefined'}`);
+    }
 
   }
 
-  async getTextToSpeech(id: number, language: string, speed: number, gender: string): Promise<Blob> {
-
-     try{
-       const response: HttpResponse<Blob> | undefined = await this.http.get(this.textToSpeechUrl + '/' + id + '?language=' + language + '&speed=' + speed + '&gender=' + gender, { observe: 'response', responseType: 'blob' }).toPromise();
-        if (response && response.status === 200 && response.body !== null) {
-          return response.body;
-        }
-        else {
-          throw new Error(`Error retrieving text: status ${response?.status ?? 'undefined'}`);
-        }
-
-     }
-      catch (error: any) {
-        console.error(error);
-        throw new Error(`Error retrieving text: ${error.message}`);
-      }
+  async postPdfFileToAudio(file: any, voice: string, speed: number, gender: string): Promise<Blob> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    console.log("formData");
+    const response: HttpResponse<Blob> | undefined = await this.http.post(this.pdfFileToAudioUrl + '?voice=' + voice + '&speed=' + speed + '&gender=' + gender, formData, { observe: 'response', responseType: 'blob' }).toPromise();
+    if (response && response.status === 200 && response.body !== null) {
+      return response.body;
     }
+    else {
+      throw new Error(`Error retrieving text: status ${response?.status ?? 'undefined'}`);
+    }
+
+  }
+
 
 
 

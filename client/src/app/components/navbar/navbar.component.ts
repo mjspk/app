@@ -16,8 +16,7 @@ throw new Error('Method not implemented.');
   isLoggedIn!: boolean;
   tabs: Tab[] = [
     { name: 'Ebooks', url: '/ebooks' },
-    { name: 'Pdf to audio', url: '/pdftoaudio' },
-    { name: 'About', url: '/about' },
+    { name: 'PDF to Audio', url: '/pdftoaudio' }
   ];
   selectedTab!: Tab;
 searchTerm: any;
