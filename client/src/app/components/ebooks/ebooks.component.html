@@ -31,9 +31,10 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="center-center col-md-3" *ngIf="books.length === 0 && !isLoading">
-                    <div class="alert alert-info text-center">
-                        No books found.
+                <div class="col-md-4 mt-4" *ngIf="books.length === 0 && !isLoading">
+                    <div class="text-center">
+                        <i class="fa fa-search fa-5x"></i>
+                        <h3>No books found</h3>
                     </div>
                 </div>
                 <div class="card" *ngFor="let book of books" style="padding: 0px;margin: 4px; width: 32%;">
